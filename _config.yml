@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: $H_Net
+title: Plant It
 email: Kernafhicham@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   My digital space dedicated to sharing my daily work and hands-on projects in IT,
