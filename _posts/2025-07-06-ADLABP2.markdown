@@ -1,0 +1,98 @@
+---
+layout: post
+title: "Active Directory Lab – Part 2: Organizational Units, Users & Groups"
+date: 2025-07-06
+categories: active-directory labs
+tags: [Active Directory, Windows Server, Users, Groups, OUs]
+---
+
+In this lab, we’re continuing the setup of our Active Directory domain by creating Organizational Units (OUs), user accounts, and groups. This structure is essential for organizing users and applying Group Policies in later labs.
+
+You can do this lab in VirtualBox like I did, or run it on any cloud VM such as Azure, AWS, or Oracle Cloud.
+
+This is **Part 2** of a multi-part Active Directory lab series designed to simulate a real-world environment. We’re building on the domain we created in Part 1.
+
+
+
+## 1. Create Organizational Units (OUs)
+
+After promoting the server to a Domain Controller, we begin by organizing our directory structure.
+
+but First, what is an OU? An Organizational Unit (OU) is a container within Active Directory (AD) that is used to logically group users, computers, groups, and other OUs.
+Think of it like the departments of a real company. If you work in a company, your AD domain might contain OUs like : IT, HR, Finance, Service Accounts, Computers …
+Let's create some OUs
+
+
+- Open 'Active Directory Users and Computers' (dsa.msc in win+R)
+- Right-click your domain ( `Hlab.local`) → New → Organizational Unit
+![OU](/Uploads/Images/OU/OU0.PNG)
+- Create the following OUs:
+  - `IT`
+  - `HR`
+  - `ServiceAccounts` ✅ *(We’ll use this in later labs for automation and background tasks)*
+- Make sure "Protect container from accidental deletion" is checked
+![OU](/Uploads/Images/OU/ou0.5.PNG)
+![OU](/Uploads/Images/OU/ou1.PNG)
+
+## 2. Add User Accounts
+
+We’ll now add users to each OU.
+
+- Right-click the `IT` OU → New → User  
+![OU](/Uploads/Images/OU/u1.PNG)
+Fill in the PI:  
+![OU](/Uploads/Images/OU/u2.PNG)
+  - Set password and check "User must change password at next logon"  
+![OU](/Uploads/Images/OU/u3.PNG) ![OU](/Uploads/Images/OU/u4.PNG)
+- After creation, right-click → Properties  
+- Set email, title, and department  
+<div style="display: flex; gap: 10px;">
+  <img src="/Uploads/Images/OU/u5.PNG" alt="OU Image 1" style="width: 48%;">
+  <img src="/Uploads/Images/OU/u6.PNG" alt="OU Image 2" style="width: 48%;">
+</div>  
+
+Same thing for the HR users, only in ServiceAccount user only we specify the password options like this:  
+
+![OU](/Uploads/Images/OU/u7.PNG)
+
+We **check "Password never expires"** so the service account doesn’t stop working due to password expiration which could break backups, scripts, or services.  
+We **uncheck "User can change password"** to prevent human users from accidentally modifying it, since service accounts are meant to run automatically with a fixed, controlled password.
+Service accounts need stability, not rotation like user account
+
+## 3. Create Security and Distribution Groups
+
+Distribution groups are used for sending email notifications to a group of people. Security groups are used for granting access to resources such as SharePoint sites,folders, Printers..  
+
+**Create a Group in AD**
+Active Directory Users and Computers (dsa.msc in win+R)
+Right-click an OU (e.g. IT)
+Select: New → Group
+![OU](/Uploads/Images/OU/u8.PNG)  
+
+Fill in:
+Group name: IT_Admins, HR_Staff, etc.
+Group scope: Global
+Group type: Security (e.g for IT) or Distribution (e.g for HRl), 
+<div style="display: flex; gap: 10px;">
+  <img src="/Uploads/Images/OU/u9.PNG" alt="OU Image d1" style="width: 48%;">
+  <img src="/Uploads/Images/OU/u10.PNG" alt="OU Image s2" style="width: 48%;">
+</div>  
+
+lets add some members to the group:
+- Right-click the group → Properties
+- Go to Members tab → click Add
+![OU](/Uploads/Images/OU/u11.PNG)   
+Add users : input the first and last name then click on check names so it output the full user with the email associate to it.  
+![OU](/Uploads/Images/OU/u12.PNG) 
+![OU](/Uploads/Images/OU/u13.PNG)  
+click OK  
+![OU](/Uploads/Images/OU/u14.PNG)  
+After adding all your members :Click Apply then OK  
+## Lab Summary
+✅ OUs created: IT, HR, ServiceAccounts  
+✅ Users added with realistic info and correct OU placement  
+✅ Service account configured with special password settings  
+✅ Groups created for role-based access and communication
+
+
+**Coming in next on Part 3**, we’ll start applying Group Policy Objects (GPOs) to the OUs and users we just created  including password policies, desktop restrictions, login automation and Joining a Windows 10 client to the domain.

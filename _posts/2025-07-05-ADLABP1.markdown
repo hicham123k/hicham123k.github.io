@@ -133,8 +133,6 @@ we now have a fully functional Domain Controller!
 ![DC Ready](/Uploads/Images/21.PNG)
 ![DC Ready](/Uploads/Images/22.PNG)
 
-### Coming in Part 2:
+### [Next on Part 2:]({% link _posts/2025-07-06-ADLABP2.markdown %})
 - Create OUs (Organizational Units)
 - Add users and groups
-- Configure Group Policies
-- Join a Windows 10 client to the domain
